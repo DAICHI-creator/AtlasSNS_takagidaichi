@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\PostsController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\FollowsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,11 +19,25 @@ use Illuminate\Support\Facades\Route;
 
 require __DIR__ . '/auth.php';
 
-Route::get('top', [PostsController::class, 'index']);
+Route::middleware('auth')->group(function () {
+    // トップページ
+    Route::get('top', [PostsController::class, 'index'])->name('top');
 
-Route::get('profile', [ProfileController::class, 'profile']);
+    // 自分のプロフィール／編集ページ
+    Route::get('profile', [ProfileController::class, 'profile'])
+         ->name('profile');
 
-Route::get('search', [UsersController::class, 'index']);
+    // ユーザー検索ページ
+    Route::get('search', [UsersController::class, 'search'])
+         ->name('search');
 
-Route::get('follow-list', [PostsController::class, 'index']);
-Route::get('follower-list', [PostsController::class, 'index']);
+    // フォロー・フォロワー一覧ページ
+    Route::get('follow-list',   [FollowsController::class, 'followList'])
+         ->name('follow-list');
+    Route::get('follower-list', [FollowsController::class, 'followerList'])
+         ->name('follower-list');
+
+    // 他ユーザーのプロフィールページ（例: /users/1）
+    Route::get('users/{user}', [UsersController::class, 'show'])
+         ->name('users.show');
+});
