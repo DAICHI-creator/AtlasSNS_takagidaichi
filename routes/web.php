@@ -5,6 +5,7 @@ use App\Http\Controllers\UsersController;
 use App\Http\Controllers\PostsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FollowsController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,4 +41,7 @@ Route::middleware('auth')->group(function () {
     // 他ユーザーのプロフィールページ（例: /users/1）
     Route::get('users/{user}', [UsersController::class, 'show'])
          ->name('users.show');
+
+    Route::get('/logout', [AuthenticatedSessionController::class, 'destroy'])
+         ->name('logout');
 });

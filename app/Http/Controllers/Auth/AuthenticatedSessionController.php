@@ -31,5 +31,16 @@ class AuthenticatedSessionController extends Controller
 
         return redirect()->intended('top');
     }
+    public function destroy(Request $request): RedirectResponse
+    {
+    // ① 本当のログアウト
+    Auth::guard('web')->logout();
 
+    // ② セッションの完全破棄と CSRF トークン再生成
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
+
+    // ③ ログイン画面へ
+    return redirect()->route('login');
+    }
 }
