@@ -1,12 +1,14 @@
         <div id="head">
-            <h1><a><img src="images/atlas.png"></a></h1>
+            <h1><a href="{{ route('top') }}"><img src="{{ asset('images/atlas.png') }}" alt="Atlasロゴ"></a></h1>
             <div id="">
                 <div id="">
-                    <p>〇〇さん</p>
+                    <p>{{ session('username') }}さん</p>
                 </div>
-                <ul>
-                    <li><a href="">ホーム</a></li>
-                    <li><a href="">プロフィール</a></li>
+                <!-- アコーディオンボタン -->
+                <!-- アコーディオン中身 -->
+                <ul id="menuContent" class="mt-2 hidden bg-white rounded shadow p-2 text-black">
+                    <li class="mb-2"><a href="{{ route('top') }}" class="block hover:underline">HOME</a></li>
+                    <li class="mb-2"><a href="">プロフィール編集</a></li>
                     <form method="GET" action="{{ route('logout') }}">
                         @csrf
                         <button type="submit" class="btn btn-secondary">ログアウト</button>
