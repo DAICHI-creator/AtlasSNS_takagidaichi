@@ -35,6 +35,7 @@ Route::middleware('auth')->group(function () {
     // フォロー・フォロワー一覧ページ
     Route::get('follow-list',   [FollowsController::class, 'followList'])
          ->name('follow-list');
+
     Route::get('follower-list', [FollowsController::class, 'followerList'])
          ->name('follower-list');
 
@@ -44,4 +45,16 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/logout', [AuthenticatedSessionController::class, 'destroy'])
          ->name('logout');
+
+    Route::post('post', [PostsController::class, 'store'])->name('posts.store');
+
+    Route::post('post/update/{post}', [PostsController::class, 'update'])->name('posts.update');
+
+    Route::delete('post/{post}', [PostsController::class, 'destroy'])->name('posts.destroy');
+
+    Route::post('/follow/{user}', [FollowsController::class, 'follow'])->name('follow');
+
+    Route::post('/unfollow/{user}', [FollowsController::class, 'unfollow'])->name('unfollow');
+
+    Route::post('profile/update', [ProfileController::class, 'update'])->name('profile.update');
 });

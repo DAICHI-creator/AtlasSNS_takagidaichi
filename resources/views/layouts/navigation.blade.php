@@ -33,6 +33,14 @@
                 </form>
             </li>
         </ul>
+        <div class="mt-4 flex items-center space-x-4">
+            <div class="w-12 h-12">
+                <img src="{{ asset('storage/images/' . Auth::user()->icon_image) }}" alt="ユーザーアイコン" class="rounded-full w-full h-full object-cover">
+            </div>
+            <div>
+                <p class="text-white">{{ Auth::user()->username }}さん</p>
+            </div>
+        </div>
     </div>
 </div>
 <script>
