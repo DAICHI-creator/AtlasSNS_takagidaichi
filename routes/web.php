@@ -6,6 +6,7 @@ use App\Http\Controllers\PostsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FollowsController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Auth\RegisteredUserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,4 +58,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/unfollow/{user}', [FollowsController::class, 'unfollow'])->name('unfollow');
 
     Route::post('profile/update', [ProfileController::class, 'update'])->name('profile.update');
+
+    Route::get('/added', [RegisteredUserController::class, 'added'])->name('added');
 });

@@ -15,19 +15,11 @@ use Illuminate\View\View;
 
 class RegisteredUserController extends Controller
 {
-    /**
-     * Display the registration view.
-     */
     public function create(): View
     {
         return view('auth.register');
     }
 
-    /**
-     * Handle an incoming registration request.
-     *
-     * @throws \Illuminate\Validation\ValidationException
-     */
     public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([
@@ -37,14 +29,15 @@ class RegisteredUserController extends Controller
             'password_confirmation'  => ['required', 'alpha_num', 'min:8', 'max:20', 'same:password'],
         ]);
 
-        User::create([
+        $user = User::create([
             'username' => $validated['username'],
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
         ]);
 
-        return redirect()->route('added')
-                         ->with('username', $validated['username']);
+        session()->flash('username', $user->username);
+
+        return redirect()->route('added');
     }
 
     public function added(): View
