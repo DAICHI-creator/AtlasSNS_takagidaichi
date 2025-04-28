@@ -31,7 +31,7 @@
     <div class="bg-black bg-opacity-20 rounded-xl p-6 shadow-lg w-80">
         <h2 class="text-white text-xl mb-6 text-center">新規ユーザー登録</h2>
 
-        <form method="POST" action="{{ route('register') }}">
+        <form method="POST" action="{{ route('user.register') }}">
             @csrf
 
             <div class="mb-4">

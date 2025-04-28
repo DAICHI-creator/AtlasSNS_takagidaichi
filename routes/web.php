@@ -21,6 +21,10 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 
 require __DIR__ . '/auth.php';
 
+    Route::get('/added', [RegisteredUserController::class, 'added'])->name('added');
+
+    Route::post('/user/register', [RegisteredUserController::class, 'store'])->name('user.register');
+
 Route::middleware('auth')->group(function () {
     // トップページ
     Route::get('top', [PostsController::class, 'index'])->name('top');
@@ -58,6 +62,4 @@ Route::middleware('auth')->group(function () {
     Route::post('/unfollow/{user}', [FollowsController::class, 'unfollow'])->name('unfollow');
 
     Route::post('profile/update', [ProfileController::class, 'update'])->name('profile.update');
-
-    Route::get('/added', [RegisteredUserController::class, 'added'])->name('added');
 });

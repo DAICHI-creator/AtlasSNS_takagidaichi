@@ -30,7 +30,7 @@
 
     <!-- 完了メッセージボックス -->
     <div class="bg-black bg-opacity-20 rounded-xl p-6 shadow-lg w-80 text-center">
-        <p class="text-lime-300 font-bold mb-2">{{ session('username') }} さん</p>
+        <p class="text-white font-bold mb-2">{{ session('username') }} さん</p>
         <p class="text-white font-bold mb-6">ようこそ！AtlasSNSへ</p>
 
         <p class="text-white mb-4">ユーザー登録が完了いたしました。</p>
