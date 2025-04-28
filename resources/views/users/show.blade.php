@@ -39,7 +39,7 @@
 <div class="mt-8">
     <h3 class="text-xl font-bold mb-4">{{ $user->username }} さんの投稿一覧</h3>
 
-    @forelse ($user->posts as $post)
+    @forelse ($posts as $post)
         <div class="bg-white p-4 mb-4 rounded shadow flex space-x-4">
             <!-- アイコン -->
             <div class="w-12 h-12">

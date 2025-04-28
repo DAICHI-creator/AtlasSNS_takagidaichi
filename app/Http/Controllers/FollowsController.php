@@ -22,21 +22,37 @@ class FollowsController extends Controller
         return back()->with('message', 'フォローを解除しました！');
     }
 
-    // フォローリストページ表示
+    // フォローリスト画面
     public function followList()
     {
-        $user = Auth::user();
-        $followUsers = $user->follows()->get();
+        // 自分がフォローしているユーザーのID一覧を取得
+        $followedUserIds = Auth::user()->follows()->pluck('followed_id');
 
-        return view('follows.followList', compact('followUsers'));
+        // フォローしているユーザーたちのデータを取得
+        $followedUsers = User::whereIn('id', $followedUserIds)->get();
+
+        // フォローしているユーザーたちの投稿を取得
+        $followedPosts = \App\Models\Post::whereIn('user_id', $followedUserIds)
+            ->latest()
+            ->get();
+
+        return view('follows.follow-list', compact('followedUsers', 'followedPosts'));
     }
 
-    // フォロワーリストページ表示
+    // フォロワーリスト画面
     public function followerList()
     {
-        $user = Auth::user();
-        $followerUsers = $user->followers()->get();
+        // 自分をフォローしているユーザーのID一覧を取得
+        $followerUserIds = Auth::user()->followers()->pluck('following_id');
 
-        return view('follows.followerList', compact('followerUsers'));
+        // フォロワーのユーザーたちのデータを取得
+        $followerUsers = User::whereIn('id', $followerUserIds)->get();
+
+        // フォロワーたちの投稿を取得
+        $followerPosts = \App\Models\Post::whereIn('user_id', $followerUserIds)
+            ->latest()
+            ->get();
+
+        return view('follows.follower-list', compact('followerUsers', 'followerPosts'));
     }
 }
