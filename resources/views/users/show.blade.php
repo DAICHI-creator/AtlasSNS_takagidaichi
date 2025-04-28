@@ -43,7 +43,7 @@
         <div class="bg-white p-4 mb-4 rounded shadow flex space-x-4">
             <!-- アイコン -->
             <div class="w-12 h-12">
-                <img src="{{ asset('storage/images/' . $user->icon_image) }}" alt="ユーザーアイコン" class="rounded-full w-full h-full object-cover">
+                <img src="{{ asset('storage/images/' . $post->user->icon_image) }}" alt="ユーザーアイコン" class="rounded-full w-full h-full object-cover">
             </div>
 
             <!-- 投稿内容 -->

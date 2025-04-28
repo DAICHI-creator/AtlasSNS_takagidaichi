@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth; // ←忘れずに追加！
+use Illuminate\Support\Facades\Auth;
 
 class UsersController extends Controller
 {
@@ -18,9 +18,11 @@ class UsersController extends Controller
             $query->where('username', 'like', '%' . $keyword . '%');
         }
 
-        $users = $query->where('id', '!=', Auth::id())->get(); // 自分は除外
+        $query->where('id', '!=', Auth::id());
 
-        return view('users.search', compact('users'));
+        $users = $query->get();
+
+        return view('users.search', compact('users', 'keyword'));
     }
 
     public function show(User $user)

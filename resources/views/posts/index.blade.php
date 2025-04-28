@@ -1,5 +1,25 @@
 <x-login-layout>
 
+<div class="bg-white p-4 mb-8 rounded shadow">
+    <form action="{{ route('posts.store') }}" method="POST">
+        @csrf
+        <div class="flex items-center mb-4">
+            <div class="w-12 h-12 mr-4">
+                <img src="{{ asset('storage/images/' . Auth::user()->icon_image) }}" alt="アイコン" class="rounded-full w-full h-full object-cover">
+            </div>
+            <textarea name="post_content" rows="2" class="flex-1 border rounded p-2" placeholder="いまどうしてる？"></textarea>
+        </div>
+        <div class="flex justify-end">
+            <button type="submit">
+                <img src="{{ asset('images/post.png') }}" alt="投稿" class="w-10 h-10 hover:opacity-80">
+            </button>
+        </div>
+        @error('post_content')
+            <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
+        @enderror
+    </form>
+</div>
+
 @foreach ($posts as $post)
     <div class="post-item mb-6 p-4 bg-white rounded shadow flex space-x-4 items-start relative">
         <!-- ユーザーアイコン -->
@@ -37,6 +57,7 @@
                 <div class="bg-white p-6 rounded shadow-lg w-96">
                     <form action="{{ route('posts.update', $post->id) }}" method="POST">
                         @csrf
+                        @method('PUT')
 
                         <textarea name="post_content" rows="4" class="w-full p-2 border rounded mb-4">{{ $post->post_content }}</textarea>
 

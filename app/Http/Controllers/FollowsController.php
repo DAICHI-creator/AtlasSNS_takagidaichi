@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Models\Post;
 
 class FollowsController extends Controller
 {
@@ -32,11 +33,11 @@ class FollowsController extends Controller
         $followedUsers = User::whereIn('id', $followedUserIds)->get();
 
         // フォローしているユーザーたちの投稿を取得
-        $followedPosts = \App\Models\Post::whereIn('user_id', $followedUserIds)
+        $followedPosts = Post::whereIn('user_id', $followedUserIds)
             ->latest()
             ->get();
 
-        return view('follows.follow-list', compact('followedUsers', 'followedPosts'));
+        return view('follows.followlist', compact('followedUsers', 'followedPosts'));
     }
 
     // フォロワーリスト画面
@@ -53,6 +54,6 @@ class FollowsController extends Controller
             ->latest()
             ->get();
 
-        return view('follows.follower-list', compact('followerUsers', 'followerPosts'));
+        return view('follows.followerlist', compact('followerUsers', 'followerPosts'));
     }
 }

@@ -1,5 +1,8 @@
 <x-login-layout>
 
+<div class="max-w-2xl mx-auto p-4">
+    <h2 class="text-2xl font-bold mb-6">ユーザー検索</h2>
+
 <!-- 検索フォーム -->
 <form method="GET" action="{{ route('search') }}" class="flex items-center mb-6">
     <input type="text" name="keyword" placeholder="ユーザー名で検索" value="{{ request('keyword') }}" class="border rounded p-2 w-64">
