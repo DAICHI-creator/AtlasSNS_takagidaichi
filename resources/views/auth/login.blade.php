@@ -48,7 +48,7 @@
 
             <div class="flex justify-end">
                 <button type="submit" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-6 rounded w-1/2">
-                    ログイン
+                    LOGIN
                 </button>
             </div>
         </form>

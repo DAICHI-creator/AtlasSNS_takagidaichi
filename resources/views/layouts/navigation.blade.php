@@ -1,22 +1,32 @@
-<div id="head" class="relative">
-    <h1>
-        <a href="{{ route('top') }}">
-            <img src="{{ asset('images/atlas.png') }}" alt="Atlasロゴ">
-        </a>
-    </h1>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>トップページ</title>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+</head>
 
-    <div class="mt-4">
-        <div>
-            <p>{{ Auth::user()->username }}さん</p>  <!-- ここも修正済みOK！ -->
+<div id="head" class="flex items-center justify-between px-6 py-4">
+    <div>
+        <a href="{{ route('top') }}">
+            <img src="{{ asset('images/atlas.png') }}" alt="Atlasロゴ" class="w-[60px]">
+        </a>
+    </div>
+
+    <div class="flex items-center space-x-6 text-white">
+        <div class="flex items-center space-x-1">
+            <span>{{ Auth::user()->username }}</span>
+            <span>　さん</span>
         </div>
 
         <!-- アコーディオンボタン -->
-        <button id="menuToggle" class="flex items-center justify-between w-full bg-blue-500 text-white p-2 rounded">
-            メニュー
-            <svg id="arrowIcon" class="w-4 h-4 ml-2 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-            </svg>
-        </button>
+        <div class="relative">
+            <button id="menuToggle" class="flex items-center justify-center p-2 rounded w-10 h-10 transform -translate-y-[4px]">
+                <svg id="arrowIcon" class="w-5 h-5 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 8l6 15 6-15" />
+                </svg>
+            </button>
+        </div>
 
         <!-- アコーディオンメニュー -->
         <ul id="menuContent" class="mt-2 hidden bg-white rounded shadow p-2 text-black">
@@ -35,10 +45,7 @@
         </ul>
         <div class="mt-4 flex items-center space-x-4">
             <div class="w-12 h-12">
-                <img src="{{ asset('storage/images/' . Auth::user()->icon_image) }}" alt="ユーザーアイコン" class="rounded-full w-full h-full object-cover">
-            </div>
-            <div>
-                <p class="text-white">{{ Auth::user()->username }}さん</p>
+                <img src="{{ asset('public/images/' . Auth::user()->icon_image) }}" alt="ユーザーアイコン" class="rounded-full w-full h-full object-cover">
             </div>
         </div>
     </div>

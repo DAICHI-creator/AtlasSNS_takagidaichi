@@ -35,7 +35,7 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($validated['password']),
         ]);
 
-        session()->flash('username', $user->username);
+        session()->put('username', $user->username);
 
         return redirect()->route('added');
     }

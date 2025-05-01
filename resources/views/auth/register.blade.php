@@ -28,6 +28,15 @@
     </div>
 
     <!-- 登録フォーム -->
+    @if ($errors->any())
+    <div class="text-red-500">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
     <div class="bg-black bg-opacity-20 rounded-xl p-6 shadow-lg w-80">
         <h2 class="text-white text-xl mb-6 text-center">新規ユーザー登録</h2>
 

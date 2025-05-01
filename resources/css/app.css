@@ -1,8 +1,3 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-.custom-bg {
-  background: linear-gradient(to bottom, #0072ff 0%, #00c6ff 50%, #f9f871 100%);
-  min-height: 100vh;
-}
