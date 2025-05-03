@@ -3,17 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>新規ユーザー登録</title>
+    <title>ログイン</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
+        /* 上から下への自然なグラデーション */
         body {
             background: linear-gradient(
                 180deg,
-                rgba(2, 112, 209, 1) 0%,
-                rgba(73, 146, 153, 1) 60%,
-                rgba(130, 171, 130, 1) 67%,
-                rgba(168, 196, 88, 1) 73%,
-                rgba(246, 223, 57, 1) 100%
+                rgba(41, 146, 255, 1) 0%,
+                rgba(52, 153, 255, 1) 22%,
+                rgba(251, 224, 69, 1) 100%
             );
             min-height: 100vh;
         }

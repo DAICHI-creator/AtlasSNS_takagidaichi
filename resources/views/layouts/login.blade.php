@@ -22,6 +22,8 @@
   <!--iphoneのアプリアイコン指定-->
   <link rel="apple-touch-icon-precomposed" href="画像のURL" />
   <!--OGPタグ/twitterカード-->
+      @vite(['resources/css/app.css', 'resources/js/app.js'])
+
 </head>
 
 <body>
@@ -30,11 +32,11 @@
   </header>
   <!-- Page Content -->
   <div id="row">
-    <div id="container">
+    <div id="container" class="">
       {{ $slot }}
     </div>
-    <div id="side-bar">
-      <div id="confirm" class="bg-white rounded p-4 shadow-md text-center">
+    <div id="side-bar" class="bg-white">
+      <div id="confirm" class="rounded">
         <p class="mb-2">{{ Auth::user()->username }}さんの</p>
         <div class="mb-4">
           <p class="mb-2">フォロー数</p>
@@ -56,8 +58,9 @@
         </p>
       </div>
     </div>
-  <footer>
-  </footer>
+  </div>
+
+  <footer></footer>
   <script src="{{ asset('js/app.js') }}"></script>
   <script src="JavaScriptファイルのURL"></script>
   <script src="JavaScriptファイルのURL"></script>
