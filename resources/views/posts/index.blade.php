@@ -1,5 +1,7 @@
 <head>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+
 </head>
 
 <x-login-layout>
@@ -24,84 +26,113 @@
 <div class="bg-gray-200 py-2">
 </div>
 @foreach ($posts as $post)
-<div class="bg-white">
-    <div class="post-item mb-6 p-4 rounded flex space-x-4 items-start relative ml-24">
-        <!-- ユーザーアイコン -->
-        <div class="w-12 h-12">
-            <img src="{{ asset('storage/images/' . $post->user->icon_image) }}" alt="ユーザーアイコン" class="rounded-full w-full h-full object-cover">
-        </div>
+    <div class="bg-white">
+        <div class="post-item mb-6 p-4 rounded flex space-x-4 items-start relative ml-24">
+            <!-- ユーザーアイコン -->
+            <div class="w-12 h-12">
+                <img
+                    src="{{ asset('storage/images/' . $post->user->icon_image) }}"
+                    alt="ユーザーアイコン"
+                    class="rounded-full w-full h-full object-cover"
+                >
+            </div>
 
-        <!-- 投稿内容 -->
-        <div class="flex-1">
-            <!-- ユーザー名 -->
-            <p class="font-bold">{{ $post->user->username }}</p>
-            <!-- 投稿本文 -->
-            <p class="mt-1 whitespace-pre-line">{{ $post->post_content }}</p>
-            <!-- 投稿日時 -->
-            <p class="absolute top-5 right-7 text-black text-sm">{{ $post->created_at->format('Y/m/d H:i') }}</p>
-        </div>
+            <!-- 投稿内容 -->
+            <div class="flex-1">
+                <!-- ユーザー名 -->
+                <p class="font-bold">
+                    {{ $post->user->username }}
+                </p>
 
-        @if ($post->user_id === Auth::id())
-        <div class="absolute bottom-2 right-4 flex space-x-2">
-            <!-- 編集ボタン -->
-            <button onclick="openModal('{{ $post->id }}')" class=" edit-btn">
-                <img src="{{ asset('images/edit.png') }}" alt="編集" class="edit-icon w-12 h-12">
-            </button>
+                <!-- 投稿本文 -->
+                <p class="mt-1 whitespace-pre-line">
+                    {{ $post->post_content }}
+                </p>
 
-            <!-- 削除ボタン -->
-            <form method="POST" action="{{ route('posts.destroy', $post->id) }}">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="trash-btn">
-                    <img src="{{ asset('images/trash.png') }}" alt="削除" class="trash-icon w-12 h-12">
-                </button>
-            </form>
-        </div>
+                <!-- 投稿日時 -->
+                <p class="absolute top-5 right-7 text-black text-sm">
+                    {{ $post->created_at->format('Y/m/d H:i') }}
+                </p>
+            </div>
 
-            <!-- 編集用モーダル -->
-            <div id="modal-{{ $post->id }}" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex justify-end items-center">
-                <div class="bg-white p-6 rounded shadow-lg w-[600px] mr-10 relative">
-                    <form action="{{ route('posts.update', $post->id) }}" method="POST">
+            @if ($post->user_id === Auth::id())
+                <!-- 編集・削除ボタン -->
+                <div class="absolute bottom-2 right-4 flex space-x-2">
+                    <!-- 編集ボタン -->
+                    <button
+                        class="js-modal-open edit-btn"
+                        post="{{ $post->post_content }}"
+                        post_id="{{ $post->id }}"
+                        onmouseenter="this.querySelector('img').src='{{ asset('images/edit_h.png') }}'"
+                        onmouseleave="this.querySelector('img').src='{{ asset('images/edit.png') }}'"
+                    >
+                        <img
+                            src="{{ asset('images/edit.png') }}"
+                            alt="編集"
+                            class="edit-icon w-12 h-12"
+                        >
+                    </button>
+
+                    <!-- 削除ボタン -->
+                    <form
+                        method="POST"
+                        action="{{ route('posts.destroy', $post->id) }}"
+                    >
                         @csrf
-                        @method('PUT')
-
-                        <textarea name="post_content" rows="4" class="w-full p-2 border-b border-gray-400 focus:outline-none resize-none" style="resize: none;">{{ $post->post_content }}</textarea>
-
-                        <button
-                            type="button"
-                            onclick="closeModal('{{ $post->id }}')"
-                            class="absolute right-4 bottom-2 z-10">
-                                <img src="{{ asset('images/edit.png') }}" alt="編集完了" class="w-8 h-8 hover:opacity-80">
+                        @method('DELETE')
+                        <button type="submit" class="trash-btn">
+                            <img
+                                src="{{ asset('images/trash.png') }}"
+                                alt="削除"
+                                class="trash-icon w-12 h-12"
+                            >
                         </button>
                     </form>
                 </div>
-            </div>
-        @endif
+            @endif
+        </div>
+    </div>
+<!-- モーダルの中身 -->
+<div id="modal-{{ $post->id }}" class="modal js-modal">
+    <!-- 背景オーバーレイ -->
+    <div class="modal__bg js-modal-close"></div>
+
+    <!-- モーダルコンテンツ -->
+    <div class="modal__content">
+        <form action="{{ route('posts.update', $post->id) }}" method="POST">
+            @csrf
+            @method('PUT')
+
+            <textarea name="post_content"
+                class="modal_post">{{ $post->post_content }}</textarea>
+
+            <input type="hidden" name="post_id" class="modal_id" value="{{ $post->id }}">
+
+        <!-- 閉じるリンク -->
+        <a href="javascript:void(0)" class="js-modal-close">
+            ×
+        </a>
     </div>
 </div>
 @endforeach
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    function openModal(id) {
-        document.getElementById('modal-' + id).classList.remove('hidden');
-    }
+$(function(){
+    // 編集ボタン(class="js-modal-open")が押されたら発火
+    $('.js-modal-open').on('click',function(){
+        $('.js-modal').fadeIn(); // モーダル表示
+        var post = $(this).attr('post');
+        var post_id = $(this).attr('post_id');
+        $('.modal_post').text(post);    // 投稿内容をセット
+        $('.modal_id').val(post_id);    // 投稿IDをセット
+        return false;
+    });
 
-    function closeModal(id) {
-        document.getElementById('modal-' + id).classList.add('hidden');
-    }
+    // モーダル閉じるボタン or 背景クリック
+    $('.js-modal-close').on('click',function(){
+        $('.js-modal').fadeOut(); // モーダル非表示
+        return false;
+    });
+});
 </script>
-<style>
-.edit-btn .edit-icon {
-    transition: all 0.3s;
-}
-.edit-btn:hover .edit-icon {
-    content: url('{{ asset('images/edit_h.png') }}');
-}
-
-.trash-btn .trash-icon {
-    transition: all 0.3s;
-}
-.trash-btn:hover .trash-icon {
-    content: url('{{ asset('images/trash-h.png') }}');
-}
-</style>
 </x-login-layout>

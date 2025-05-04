@@ -31,11 +31,11 @@
     @include('layouts.navigation')
   </header>
   <!-- Page Content -->
-  <div id="row">
-    <div id="container" class="">
+  <div id="row" class="flex w-screen min-h-screen bg-white">
+    <div id="container">
       {{ $slot }}
     </div>
-    <div id="side-bar" class="bg-white">
+    <div id="side-bar">
       <div id="confirm" class="rounded">
         <p class="mb-2">{{ Auth::user()->username }}さんの</p>
         <div class="mb-4">
