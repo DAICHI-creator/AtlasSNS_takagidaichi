@@ -23,10 +23,10 @@
         @enderror
     </form>
 </div>
-<div class="bg-gray-200 py-2">
+<div class="bg-gray-200 py-1">
 </div>
 @foreach ($posts as $post)
-    <div class="bg-white">
+    <div class="bg-white" style="border-bottom: 1px solid #888888;">
         <div class="post-item mb-6 p-4 rounded flex space-x-4 items-start relative ml-24">
             <!-- ユーザーアイコン -->
             <div class="w-12 h-12">
@@ -60,7 +60,7 @@
                 <div class="absolute bottom-2 right-4 flex space-x-2">
                     <!-- 編集ボタン -->
                     <button
-                        class="js-modal-open edit-btn"
+                        class="js-modal-open"
                         post="{{ $post->post_content }}"
                         post_id="{{ $post->id }}"
                         onmouseenter="this.querySelector('img').src='{{ asset('images/edit_h.png') }}'"
@@ -104,14 +104,21 @@
             @method('PUT')
 
             <textarea name="post_content"
-                class="modal_post">{{ $post->post_content }}</textarea>
+                    class="modal_post">{{ $post->post_content }}
+            </textarea>
 
-            <input type="hidden" name="post_id" class="modal_id" value="{{ $post->id }}">
-
-        <!-- 閉じるリンク -->
-        <a href="javascript:void(0)" class="js-modal-close">
-            ×
-        </a>
+            <button  type="submit"
+            class="edit-btn"
+            onmouseenter="this.querySelector('img').src='{{ asset('images/edit_h.png') }}'"
+            onmouseleave="this.querySelector('img').src='{{ asset('images/edit.png') }}'"
+            >
+            <img
+                src="{{ asset('images/edit.png') }}"
+                alt="編集"
+                class="edit-icon w-12 h-12"
+            >
+            </button>
+        </form>
     </div>
 </div>
 @endforeach
@@ -120,11 +127,17 @@
 $(function(){
     // 編集ボタン(class="js-modal-open")が押されたら発火
     $('.js-modal-open').on('click',function(){
-        $('.js-modal').fadeIn(); // モーダル表示
         var post = $(this).attr('post');
         var post_id = $(this).attr('post_id');
-        $('.modal_post').text(post);    // 投稿内容をセット
-        $('.modal_id').val(post_id);    // 投稿IDをセット
+
+        // 自分に対応するモーダルだけ開くように変更！
+        const modal = $('#modal-' + post_id);
+        modal.fadeIn();
+
+        // そのモーダル内の要素にだけデータをセット
+        modal.find('.modal_post').text(post);
+        modal.find('.modal_id').val(post_id);
+
         return false;
     });
 
