@@ -1,7 +1,6 @@
 <head>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-
 </head>
 
 <x-login-layout>
@@ -74,20 +73,16 @@
                     </button>
 
                     <!-- 削除ボタン -->
-                    <form
-                        method="POST"
-                        action="{{ route('posts.destroy', $post->id) }}"
+                    <button type="button" class="trash-btn open-delete-modal" data-post-id="{{ $post->id }}"
+                        onmouseenter="this.querySelector('img').src='{{ asset('images/trash-h.png') }}'"
+                        onmouseleave="this.querySelector('img').src='{{ asset('images/trash.png') }}'"
                     >
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="trash-btn">
-                            <img
-                                src="{{ asset('images/trash.png') }}"
-                                alt="削除"
-                                class="trash-icon w-12 h-12"
-                            >
-                        </button>
-                    </form>
+                        <img
+                            src="{{ asset('images/trash.png') }}"
+                            alt="削除"
+                            class="trash-icon w-12 h-12"
+                        >
+                    </button>
                 </div>
             @endif
         </div>
@@ -121,6 +116,22 @@
         </form>
     </div>
 </div>
+
+<!-- 削除確認モーダル -->
+<div id="delete-modal-{{ $post->id }}" class="fixed inset-0 hidden z-50">
+  <div class="absolute top-0 left-1/2 transform -translate-x-1/2 bg-white w-[300px] p-4" style="border: 1px solid #d3d3d3;">
+    <p class="text-sm mb-6">この投稿を削除します。よろしいでしょうか？</p>
+    <div class="flex justify-end space-x-4">
+      <form method="POST" action="{{ route('posts.destroy', $post->id) }}">
+        @csrf
+        @method('DELETE')
+        <button type="submit" class="px-12 py-1 bg-[#7895d7] text-white rounded">OK</button>
+      </form>
+
+      <button class="cancel-delete px-4 py-1 bg-gray-200 rounded">キャンセル</button>
+    </div>
+  </div>
+</div>
 @endforeach
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
@@ -146,6 +157,22 @@ $(function(){
         $('.js-modal').fadeOut(); // モーダル非表示
         return false;
     });
+});
+
+$(function() {
+  // 削除ボタン → モーダル表示
+  $('.open-delete-modal').on('click', function() {
+    const postId = $(this).data('post-id');
+    console.log('クリックされた投稿ID:', postId);
+    console.log($('#delete-modal-' + postId).length);
+    const modal = $('#delete-modal-' + postId);
+    modal.removeClass('hidden').fadeIn();
+  });
+
+  // キャンセルボタン → モーダル非表示
+  $('.cancel-delete').on('click', function() {
+    $(this).closest('.fixed').fadeOut();
+  });
 });
 </script>
 </x-login-layout>

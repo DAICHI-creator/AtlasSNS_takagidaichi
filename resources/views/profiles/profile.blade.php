@@ -1,3 +1,8 @@
+<head>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+</head>
+
 <x-login-layout>
 
     <div class="bg-white rounded p-8 shadow-md max-w-md mx-auto">
