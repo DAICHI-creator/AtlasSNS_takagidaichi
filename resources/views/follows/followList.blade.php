@@ -5,38 +5,61 @@
 
 <x-login-layout>
 
-<div class="p-4">
-    <h2 class="text-2xl font-bold mb-6">フォローリスト</h2>
-
-    <!-- フォローしているユーザーアイコン一覧 -->
-    <div class="flex flex-wrap gap-4 mb-8">
+<div class="mx-auto bg-white p-10 ml-10 min-h-[100px] flex">
+    <h2 class="text-2xl mt-2 font-bold">Follow List</h2>
+    <div class="flex ml-10">
+        @if ($followedUsers->isEmpty())
+            <p class="text-center text-gray-500">フォローしていません。</p>
+        @else
         @foreach ($followedUsers as $user)
-            <a href="{{ route('users.show', $user->id) }}">
-                <img src="{{ asset('storage/images/' . $user->icon_image) }}" alt="ユーザーアイコン" class="w-16 h-16 rounded-full object-cover hover:opacity-80">
+            <!-- ユーザーアイコン -->
+            <a href="{{ route('users.show', $user->id) }}" class="block mr-3 w-12 h-12">
+                <img src="{{ asset('storage/images/' . $user->icon_image) }}" alt="ユーザーアイコン" class="w-12 h-12 rounded-full object-cover hover:opacity-80">
             </a>
         @endforeach
+        @endif
     </div>
+</div>
+<div class="bg-gray-200 py-1"></div>
+<div>
+    <!-- フォロワーの投稿一覧 -->
+    @if ($followedPosts->isEmpty())
+        <p class="text-center text-gray-500">フォロワーの投稿がありません。</p>
+    @else
+    @foreach ($followedPosts as $post)
+        <div class="bg-white" style="border-bottom: 1px solid #888888;">
+            <div class="post-item mb-6 p-4 rounded flex space-x-4 items-start relative ml-24">
+                <!-- ユーザーアイコン -->
+                <div class="w-12 h-12">
+                    <a href="{{ route('users.show', $post->user->id) }}">
+                        <img
+                            src="{{ asset('storage/images/' . $post->user->icon_image) }}"
+                            alt="ユーザーアイコン"
+                            class="rounded-full w-full h-full object-cover">
+                    </a>
+                </div>
 
-    <!-- フォローしているユーザーの投稿一覧 -->
-    <h3 class="text-xl font-bold mb-4">投稿一覧</h3>
+                <!-- 投稿内容 -->
+                <div class="flex-1">
+                    <!-- ユーザー名 -->
+                    <p class="font-bold">
+                        {{ $post->user->username }}
+                    </p>
 
-    @forelse ($followedPosts as $post)
-        <div class="bg-white p-4 mb-4 rounded shadow flex space-x-4">
-            <!-- ユーザーアイコン -->
-            <a href="{{ route('users.show', $post->user->id) }}" class="w-12 h-12">
-                <img src="{{ asset('storage/images/' . $post->user->icon_image) }}" alt="ユーザーアイコン" class="rounded-full w-full h-full object-cover">
-            </a>
+                    <!-- 投稿本文 -->
+                    <p class="mt-1 whitespace-pre-line">
+                        {{ $post->post_content }}
+                    </p>
 
-            <!-- 投稿内容 -->
-            <div class="flex-1">
-                <p class="font-bold">{{ $post->user->username }}</p>
-                <p class="mt-1">{{ $post->post_content }}</p>
-                <p class="text-gray-500 text-sm mt-2">{{ $post->created_at->format('Y/m/d H:i') }}</p>
+                    <!-- 投稿日時 -->
+                    <p class="absolute top-5 right-7 text-black text-sm">
+                        {{ $post->created_at->format('Y/m/d H:i') }}
+                    </p>
+                </div>
             </div>
         </div>
-    @empty
-        <p class="text-gray-500">投稿がありません。</p>
-    @endforelse
+    @endforeach
+    @endif
 </div>
 
 </x-login-layout>

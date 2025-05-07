@@ -41,7 +41,7 @@
         <p class="mb-4 text-base">{{ Auth::user()->username }}さんの</p>
 
         <div class="mb-6">
-          <p class="text-base mb-1">フォロー数　　{{ Auth::user()->follows()->count() }}人</p>
+          <p class="text-base mb-1">フォロー数　　　{{ Auth::user()->follows()->count() }}人</p>
           <p class="mt-2 flex justify-end pr-2">
             <a href="{{ route('follow-list') }}"
            class="bg-[#0756cf] text-white text-sm px-4 py-2 rounded w-[90px] text-center">フォローリスト</a>

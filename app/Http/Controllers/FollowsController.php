@@ -13,14 +13,14 @@ class FollowsController extends Controller
     public function follow(User $user)
     {
         Auth::user()->follows()->attach($user->id);
-        return back()->with('message', 'フォローしました！');
+        return redirect()->route('search')->with('message', 'フォローしました！');
     }
 
     // フォロー解除する
     public function unfollow(User $user)
     {
         Auth::user()->follows()->detach($user->id);
-        return back()->with('message', 'フォローを解除しました！');
+        return redirect()->route('search')->with('message', 'フォローを解除しました！');
     }
 
     // フォローリスト画面

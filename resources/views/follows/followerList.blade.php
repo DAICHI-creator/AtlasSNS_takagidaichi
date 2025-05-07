@@ -5,54 +5,60 @@
 
 <x-login-layout>
 
-<div class="max-w-2xl mx-auto p-4">
-    <h2 class="text-2xl font-bold mb-6">フォロワーリスト</h2>
-
-    @if ($followerUsers->isEmpty())
-        <p class="text-center text-gray-500">フォロワーがいません。</p>
-    @else
+<div class="mx-auto bg-white p-10 ml-10 min-h-[100px] flex">
+    <h2 class="text-2xl mt-2 font-bold">Follower List</h2>
+    <div class="flex ml-10">
+        @if ($followerUsers->isEmpty())
+            <p class="text-center text-gray-500">フォロワーがいません。</p>
+        @else
         @foreach ($followerUsers as $user)
-            <div class="flex items-center mb-6 p-4 bg-white rounded shadow">
-                <!-- ユーザーアイコン -->
-                <a href="{{ route('users.show', $user->id) }}" class="w-12 h-12 mr-4">
-
-                <img src="{{ asset('storage/images/' . $user->icon_image) }}" alt="ユーザーアイコン" class="w-16 h-16 rounded-full object-cover hover:opacity-80">
-
-                </a>
-                <!-- ユーザー情報 -->
-                <div>
-                    <a href="{{ route('users.show', $user->id) }}" class="text-lg font-bold hover:underline">
-                        {{ $user->username }}
-                    </a>
-                    @if ($user->bio)
-                        <p class="text-gray-600 text-sm mt-1">{{ $user->bio }}</p>
-                    @endif
-                </div>
-            </div>
+            <!-- ユーザーアイコン -->
+            <a href="{{ route('users.show', $user->id) }}" class="block mr-3 w-12 h-12">
+                <img src="{{ asset('storage/images/' . $user->icon_image) }}" alt="ユーザーアイコン" class="w-12 h-12 rounded-full object-cover hover:opacity-80">
+            </a>
         @endforeach
-    @endif
-
+        @endif
+    </div>
+</div>
+<div class="bg-gray-200 py-1"></div>
+<div>
     <!-- フォロワーの投稿一覧 -->
-    <h3 class="text-xl font-bold mb-4 mt-8">投稿一覧</h3>
-
     @if ($followerPosts->isEmpty())
         <p class="text-center text-gray-500">フォロワーの投稿がありません。</p>
     @else
-        @foreach ($followerPosts as $post)
-            <div class="bg-white p-4 mb-4 rounded shadow flex space-x-4">
-                <!-- 投稿者のアイコン -->
-                <a href="{{ route('users.show', $post->user->id) }}" class="w-12 h-12">
-                    <img src="{{ asset('storage/images/' . $post->user->icon_image) }}" alt="ユーザーアイコン" class="rounded-full w-full h-full object-cover">
-                </a>
+    @foreach ($followerPosts as $post)
+        <div class="bg-white" style="border-bottom: 1px solid #888888;">
+            <div class="post-item mb-6 p-4 rounded flex space-x-4 items-start relative ml-24">
+                <!-- ユーザーアイコン -->
+                <div class="w-12 h-12">
+                    <a href="{{ route('users.show', $post->user->id) }}">
+                        <img
+                            src="{{ asset('storage/images/' . $post->user->icon_image) }}"
+                            alt="ユーザーアイコン"
+                            class="rounded-full w-full h-full object-cover">
+                    </a>
+                </div>
 
                 <!-- 投稿内容 -->
                 <div class="flex-1">
-                    <p class="font-bold">{{ $post->user->username }}</p>
-                    <p class="mt-1">{{ $post->post_content }}</p>
-                    <p class="text-gray-500 text-sm mt-2">{{ $post->created_at->format('Y/m/d H:i') }}</p>
+                    <!-- ユーザー名 -->
+                    <p class="font-bold">
+                        {{ $post->user->username }}
+                    </p>
+
+                    <!-- 投稿本文 -->
+                    <p class="mt-1 whitespace-pre-line">
+                        {{ $post->post_content }}
+                    </p>
+
+                    <!-- 投稿日時 -->
+                    <p class="absolute top-5 right-7 text-black text-sm">
+                        {{ $post->created_at->format('Y/m/d H:i') }}
+                    </p>
                 </div>
             </div>
-        @endforeach
+        </div>
+    @endforeach
     @endif
 </div>
 
