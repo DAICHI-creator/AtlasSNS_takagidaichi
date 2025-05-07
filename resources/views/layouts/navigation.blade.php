@@ -30,18 +30,18 @@
 
         <!-- アコーディオンメニュー -->
         <div id="modalMenu" class="fixed inset-0 bg-black bg-opacity-0 hidden z-40">
-            <div class="absolute top-[50px] right-0 w-[15.2%] bg-white p-4" style="border: 1px solid #00297e;">
-                <ul class="text-black">
-                    <li class="mb-2">
-                        <a href="{{ route('top') }}" class="block">HOME</a>
+            <div class="absolute top-[50px] right-0 w-[15.2%] bg-white h-[200px]" style="border: 1px solid #00297e;">
+                <ul class="h-full w-full text-center text-gray-500 text-[16px]">
+                    <li>
+                        <a href="{{ route('top') }}" class="block w-full h-[33.33%] flex items-center justify-center hover:bg-[#00297e] hover:text-white text-[17px] font-medium hover:no-underline">HOME</a>
                     </li>
-                    <li class="mb-2">
-                        <a href="{{ route('profile') }}" class="block">プロフィール編集</a>
+                    <li>
+                        <a href="{{ route('profile') }}" class="block w-full h-[33.33%] flex items-center justify-center hover:bg-[#00297e] hover:text-white text-[17px] font-medium hover:no-underline">プロフィール編集</a>
                     </li>
                     <li>
                         <form method="GET" action="{{ route('logout') }}">
                             @csrf
-                            <button type="submit" class="w-full text-left">ログアウト</button>
+                            <button type="submit" class="block w-full h-[33.33%] flex items-center justify-center hover:bg-[#00297e] hover:text-white text-[17px] font-medium">ログアウト</button>
                         </form>
                     </li>
                 </ul>

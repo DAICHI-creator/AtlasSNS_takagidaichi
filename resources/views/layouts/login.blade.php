@@ -36,30 +36,35 @@
       {{ $slot }}
     </div>
     <div id="side-bar">
-      <div id="confirm" class="rounded">
-        <p class="mb-2">{{ Auth::user()->username }}さんの</p>
-        <div class="mb-4">
-          <p class="mb-2">フォロー数</p>
-          <p>{{ Auth::user()->follows()->count() }}名</p>
-          <p class="mt-2">
-            <a href="{{ route('follow-list') }}" class="btn">フォローリスト</a>
-          </p>
-        </div>
-        <div class="mb-4">
-          <p class="mb-2">フォロワー数</p>
-          <p>{{ Auth::user()->followers()->count() }}名</p>
-          <p class="mt-2">
-            <a href="{{ route('follower-list') }}" class="btn">フォロワーリスト</a>
+      <div id="confirm" class="bg-white rounded border p-4">
+
+        <p class="mb-4 text-base">{{ Auth::user()->username }}さんの</p>
+
+        <div class="mb-6">
+          <p class="text-base mb-1">フォロー数　　{{ Auth::user()->follows()->count() }}人</p>
+          <p class="mt-2 flex justify-end pr-2">
+            <a href="{{ route('follow-list') }}"
+           class="bg-[#0756cf] text-white text-sm px-4 py-2 rounded w-[90px] text-center">フォローリスト</a>
           </p>
         </div>
 
-        <p class="btn">
-          <a href="{{ route('search') }}">ユーザー検索</a>
-        </p>
+        <div class="mb-10">
+          <p class="text-base mb-1">フォロワー数　　{{ Auth::user()->followers()->count() }}人</p>
+          <p class="mt-2 flex justify-end pr-2">
+            <a href="{{ route('follower-list') }}"
+           class="bg-[#0756cf] text-white text-sm px-4 py-2 rounded w-[90px] text-center">フォロワーリスト</a>
+          </p>
+        </div>
       </div>
-    </div>
-  </div>
 
+        <div class="w-full h-[2px] bg-gray-400 mb-6"></div>
+
+        <div class="flex justify-center">
+          <a href="{{ route('search') }}"
+         class="bg-[#0756cf] text-white text-sm px-6 py-2 rounded w-[100px] text-center">ユーザー検索</a>
+        </div>
+  </div>
+</div>
   <footer></footer>
   <script src="{{ asset('js/app.js') }}"></script>
   <script src="JavaScriptファイルのURL"></script>
