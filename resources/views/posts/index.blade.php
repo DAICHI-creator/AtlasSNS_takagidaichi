@@ -9,7 +9,7 @@
     <form action="{{ route('posts.store') }}" method="POST">
         @csrf
         <div class="flex">
-            <div class="h-12 mr- relative top-[-4px] left-[16px]">
+            <div class="h-12 relative top-[-4px] left-[16px]">
                 <img src="{{ asset('storage/images/' . Auth::user()->icon_image) }}" alt="アイコン" class="rounded-full w-full h-full object-cover">
             </div>
             <textarea name="post_content" rows="2" class="w-3/4 h-24 rounded p-2 resize-none border-none [text-indent:2rem] placeholder:text-gray-300" placeholder="投稿内容を入力してください。"></textarea>

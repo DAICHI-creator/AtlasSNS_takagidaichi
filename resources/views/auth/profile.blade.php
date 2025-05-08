@@ -4,77 +4,127 @@
 </head>
 
 <x-login-layout>
-
-    <div class="bg-white rounded p-8 shadow-md max-w-md mx-auto">
-        <h2 class="text-2xl font-bold mb-6">プロフィール編集</h2>
-
-        @if (session('message'))
-            <div class="mb-4 p-2 bg-green-100 border border-green-400 text-green-700 rounded">
-                {{ session('message') }}
-            </div>
-        @endif
-
-        <form method="POST" action="{{ route('profile.update') }}" enctype="multipart/form-data">
-            @csrf
-
-            <!-- ユーザー名 -->
-            <div class="mb-4">
-                <label class="block mb-2">ユーザー名</label>
-                <input type="text" name="username" value="{{ old('username', Auth::user()->username) }}" class="w-full p-2 border rounded">
-                @error('username')
-                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                @enderror
-            </div>
-
-            <!-- メールアドレス -->
-            <div class="mb-4">
-                <label class="block mb-2">メールアドレス</label>
-                <input type="email" name="email" value="{{ old('email', Auth::user()->email) }}" class="w-full p-2 border rounded">
-                @error('email')
-                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                @enderror
-            </div>
-
-            <!-- 新しいパスワード -->
-            <div class="mb-4">
-                <label class="block mb-2">新しいパスワード</label>
-                <input type="password" name="password" class="w-full p-2 border rounded" placeholder="変更しない場合は空白でOK">
-                @error('password')
-                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                @enderror
-            </div>
-
-            <!-- 新しいパスワード（確認） -->
-            <div class="mb-4">
-                <label class="block mb-2">新しいパスワード（確認）</label>
-                <input type="password" name="password_confirmation" class="w-full p-2 border rounded" placeholder="確認用">
-                @error('password_confirmation')
-                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                @enderror
-            </div>
-
-            <!-- 自己紹介 -->
-            <div class="mb-4">
-                <label class="block mb-2">自己紹介</label>
-                <textarea name="bio" rows="3" class="w-full p-2 border rounded">{{ old('bio', Auth::user()->bio) }}</textarea>
-                @error('bio')
-                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                @enderror
-            </div>
-
-            <!-- アイコン画像 -->
-            <div class="mb-6">
-                <label class="block mb-2">アイコン画像</label>
-                <input type="file" name="icon_image" accept="image/*" class="w-full">
-                @error('icon_image')
-                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                @enderror
-            </div>
-
-            <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600">
-                更新する
-            </button>
-        </form>
+<div class="flex justify-center bg-white p-10 min-h-[100px] mt-20 max-w-5xl mx-auto">
+    <!-- アイコン -->
+    <div class="w-12 h-12 mr-20 flex-shrink-0">
+        <img src="{{ asset('storage/images/' . Auth::user()->icon_image) }}" alt="アイコン"
+             class="rounded-full w-full h-full object-cover">
     </div>
 
+    <!-- フォーム -->
+    <form method="POST" action="{{ route('profile.update') }}" enctype="multipart/form-data" class="w-full max-w-[600px] mt-2">
+        @csrf
+
+        <!-- ユーザー名 -->
+        <div class="flex items-center mb-20">
+            <div class="w-56 mr-4">
+                <label class="block text-left whitespace-nowrap font-semibold">user name</label>
+            </div>
+            <div class="flex justify-end w-full">
+                <input type="text" name="username" value="{{ old('username', Auth::user()->username) }}"
+                       class="w-[300px] p-2 border bg-gray-100">
+            </div>
+            @error('username')
+                <p class="text-red-500 text-sm mt-1 ml-[224px]">{{ $message }}</p>
+            @enderror
+        </div>
+
+        <!-- メールアドレス -->
+        <div class="flex items-center mb-20">
+            <div class="w-56 mr-4">
+                <label class="block text-left whitespace-nowrap font-semibold">mail address</label>
+            </div>
+            <div class="flex justify-end w-full">
+                <input type="email" name="email" value="{{ old('email', Auth::user()->email) }}"
+                       class="w-[300px] p-2 border bg-gray-100">
+            </div>
+            @error('email')
+                <p class="text-red-500 text-sm mt-1 ml-[224px]">{{ $message }}</p>
+            @enderror
+        </div>
+
+        <!-- パスワード -->
+        <div class="flex items-center mb-20">
+            <div class="w-56 mr-4">
+                <label class="block text-left whitespace-nowrap font-semibold">password</label>
+            </div>
+            <div class="flex justify-end w-full">
+                <input type="password" name="password" placeholder="変更しない場合は空白でOK"
+                       class="w-[300px] p-2 border bg-gray-100">
+            </div>
+            @error('password')
+                <p class="text-red-500 text-sm mt-1 ml-[224px]">{{ $message }}</p>
+            @enderror
+        </div>
+
+        <!-- パスワード確認 -->
+        <div class="flex items-center mb-20">
+            <div class="w-56 mr-4">
+                <label class="block text-left whitespace-nowrap font-semibold">password confirm</label>
+            </div>
+            <div class="flex justify-end w-full">
+                <input type="password" name="password_confirmation" placeholder="確認用"
+                       class="w-[300px] p-2 border bg-gray-100">
+            </div>
+            @error('password_confirmation')
+                <p class="text-red-500 text-sm mt-1 ml-[224px]">{{ $message }}</p>
+            @enderror
+        </div>
+
+        <!-- 自己紹介 -->
+        <div class="flex items-center mb-20">
+            <div class="w-56 mr-4">
+                <label class="block text-left whitespace-nowrap font-semibold">bio</label>
+            </div>
+            <div class="flex justify-end w-full">
+                <textarea name="bio" rows="1" class="w-[300px] p-2 border resize-none bg-gray-100">{{ old('bio', Auth::user()->bio) }}</textarea>
+            </div>
+            @error('bio')
+                <p class="text-red-500 text-sm mt-1 ml-[224px]">{{ $message }}</p>
+            @enderror
+        </div>
+
+        <!-- アイコン画像 -->
+        <div class="flex mb-20">
+            <div class="w-56 mr-4">
+                <label class="block text-left whitespace-nowrap font-semibold">icon image</label>
+            </div>
+            <div class="flex justify-end w-full">
+                <div class="w-[300px] h-[100px] bg-gray-100 flex items-center justify-center border border-gray-500 border-solid">
+                    <label for="icon_image" id="custom-file-label"
+                        class="bg-white px-6 py-2 text-gray-300 cursor-pointer hover:bg-gray-50">
+                        ファイルを選択
+                    </label>
+                    <input type="file" id="icon_image" name="icon_image" accept="image/*" class="hidden">
+                </div>
+            </div>
+            @error('icon_image')
+                <p class="text-red-500 text-sm mt-1 ml-[224px]">{{ $message }}</p>
+            @enderror
+        </div>
+
+        <!-- 更新ボタン -->
+        <div class="pt-10 text-center mr-20">
+            <button type="submit" class="bg-red-500 text-white py-2 px-20 rounded hover:bg-red-600">
+                更新
+            </button>
+        </div>
+    </form>
+</div>
+<script>
+    const fileInput = document.getElementById('icon_image');
+    const fileLabel = document.getElementById('custom-file-label');
+
+    fileInput.addEventListener('change', function () {
+        if (fileInput.files.length > 0) {
+            fileLabel.textContent = fileInput.files[0].name;
+            fileLabel.classList.remove('text-gray-300');
+            fileLabel.classList.add('text-gray-700');
+        } else {
+            fileLabel.textContent = 'ファイルを選択';
+            fileLabel.classList.remove('text-gray-700');
+            fileLabel.classList.add('text-gray-300');
+        }
+    });
+</script>
 </x-login-layout>

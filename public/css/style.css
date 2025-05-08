@@ -1,43 +1,50 @@
 @charset "utf-8";
-html{
-}
-body{
-}
+
+html {}
+
+body {}
+
 /* header */
-header{
-    background:#186AC9;
+header {
+    background: #186AC9;
 }
 
 /* main content */
-#row{
+#row {
     display: flex;
     flex-flow: row wrap;
 }
-#container{
+
+#container {
     flex: 0 0 85%;
 }
-#side-bar{
+
+#side-bar {
     flex: 0 0 15%;
     border-left: 1px solid #727272;
 }
-.content{
+
+.content {
     margin: 0 auto;
     padding: 40px;
 }
-.modal{
+
+.modal {
     display: none;
     height: 100vh;
     position: fixed;
     top: 0;
     width: 100%;
 }
-.modal__bg{
-    background: rgba(0,0,0,0.3);
+
+.modal__bg {
+    background: rgba(0, 0, 0, 0.3);
     height: 100vh;
     position: absolute;
     width: 100%;
 }
-.modal__content{
+
+.modal__content {
     background: #fff;
     right: 0;
     padding: 40px;
@@ -48,6 +55,7 @@ header{
     border-radius: 5px;
     transform: translateY(-50%);
 }
+
 .modal_post {
     width: 100%;
     height: 80%;
@@ -62,6 +70,7 @@ header{
     resize: none;
     line-height: 1.6;
 }
+
 .edit-btn {
     position: absolute;
     bottom: 24%;
@@ -71,4 +80,9 @@ header{
     border: none;
     cursor: pointer;
     padding: 0;
+}
+
+/* ファイル名部分を非表示にする */
+input[type="file"].hide-filename::file-selector-text+* {
+    display: none;
 }
