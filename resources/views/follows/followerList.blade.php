@@ -48,7 +48,7 @@
 
                     <!-- 投稿本文 -->
                     <p class="mt-1 whitespace-pre-line">
-                        {{ $post->post_content }}
+                        {{ $post->post }}
                     </p>
 
                     <!-- 投稿日時 -->

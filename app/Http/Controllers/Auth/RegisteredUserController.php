@@ -23,10 +23,16 @@ class RegisteredUserController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
-            // 【追加】storageにデフォルト画像がなければコピー
-    $storagePath = storage_path('app/public/images/icon1.png');
+    $storageDir = storage_path('app/public/images');
+    $storagePath = $storageDir . '/icon1.png';
     $publicPath = public_path('images/icon1.png');
 
+    // ディレクトリが存在しなければ作成
+    if (!File::exists($storageDir)) {
+        File::makeDirectory($storageDir, 0755, true); // 再帰的に作成
+    }
+
+    // ファイルが存在しなければコピー
     if (!File::exists($storagePath)) {
         File::copy($publicPath, $storagePath);
     }

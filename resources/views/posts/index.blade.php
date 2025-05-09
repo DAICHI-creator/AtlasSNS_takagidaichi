@@ -12,12 +12,12 @@
             <div class="h-12 relative top-[-4px] left-[16px]">
                 <img src="{{ asset('storage/images/' . Auth::user()->icon_image) }}" alt="アイコン" class="rounded-full w-full h-full object-cover">
             </div>
-            <textarea name="post_content" rows="2" class="w-3/4 h-24 rounded p-2 resize-none border-none [text-indent:2rem] placeholder:text-gray-300" placeholder="投稿内容を入力してください。"></textarea>
+            <textarea name="post" rows="2" class="w-3/4 h-24 rounded p-2 resize-none border-none [text-indent:2rem] placeholder:text-gray-300" placeholder="投稿内容を入力してください。"></textarea>
             <button type="submit" class="ml-4 shrink-0 flex w-10 h-10 mt-20">
                 <img src="{{ asset('images/post.png') }}" alt="投稿" class="w-10 h-10 hover:opacity-80">
             </button>
         </div>
-        @error('post_content')
+        @error('post')
             <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
         @enderror
     </form>
@@ -45,7 +45,7 @@
 
                 <!-- 投稿本文 -->
                 <p class="mt-1 whitespace-pre-line">
-                    {{ $post->post_content }}
+                    {{ $post->post }}
                 </p>
 
                 <!-- 投稿日時 -->
@@ -60,7 +60,7 @@
                     <!-- 編集ボタン -->
                     <button
                         class="js-modal-open"
-                        post="{{ $post->post_content }}"
+                        post="{{ $post->post }}"
                         post_id="{{ $post->id }}"
                         onmouseenter="this.querySelector('img').src='{{ asset('images/edit_h.png') }}'"
                         onmouseleave="this.querySelector('img').src='{{ asset('images/edit.png') }}'"
@@ -98,8 +98,8 @@
             @csrf
             @method('PUT')
 
-            <textarea name="post_content"
-                    class="modal_post">{{ $post->post_content }}
+            <textarea name="post"
+                    class="modal_post">{{ $post->post }}
             </textarea>
 
             <button  type="submit"

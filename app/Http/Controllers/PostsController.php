@@ -21,13 +21,13 @@ class PostsController extends Controller
 {
     // バリデーション（必要なら）
     $request->validate([
-        'post_content' => 'required|string|min:1|max:150',
+        'post' => 'required|string|min:1|max:150',
     ]);
 
     // 投稿を保存（仮で保存処理書く）
     Post::create([
         'user_id' => Auth::id(), // ログイン中のユーザーID
-        'post_content' => $request->input('post_content'),
+        'post' => $request->input('post'),
     ]);
 
     return redirect()->route('top')->with('message', '投稿が完了しました！');
@@ -44,12 +44,12 @@ class PostsController extends Controller
 
     // バリデーション
     $request->validate([
-        'post_content' => 'required|string|min:1|max:150',
+        'post' => 'required|string|min:1|max:150',
     ]);
 
     // 更新
     $post->update([
-        'post_content' => $request->input('post_content'),
+        'post' => $request->input('post'),
     ]);
 
     return redirect()->route('top')->with('message', '投稿を編集しました！');
