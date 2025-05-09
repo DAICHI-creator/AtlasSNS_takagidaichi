@@ -16,78 +16,91 @@
         @csrf
 
         <!-- ユーザー名 -->
-        <div class="flex items-center mb-20">
+        <div class="mb-20">
+        <div class="flex items-center">
             <div class="w-56 mr-4">
-                <label class="block text-left whitespace-nowrap font-semibold">user name</label>
+                <label class="block text-left whitespace-nowrap font-semibold">ユーザー名</label>
             </div>
             <div class="flex justify-end w-full">
                 <input type="text" name="username" value="{{ old('username', Auth::user()->username) }}"
                        class="w-[300px] p-2 border bg-gray-100">
             </div>
-            @error('username')
-                <p class="text-red-500 text-sm mt-1 ml-[224px]">{{ $message }}</p>
-            @enderror
+        </div>
+        @error('username')
+            <p class="text-red-500 text-sm mt-1 ml-[224px]">{{ $message }}</p>
+        @enderror
         </div>
 
         <!-- メールアドレス -->
-        <div class="flex items-center mb-20">
+        <div class="mb-20">
+        <div class="flex items-center">
             <div class="w-56 mr-4">
-                <label class="block text-left whitespace-nowrap font-semibold">mail address</label>
+                <label class="block text-left whitespace-nowrap font-semibold">メールアドレス</label>
             </div>
             <div class="flex justify-end w-full">
                 <input type="email" name="email" value="{{ old('email', Auth::user()->email) }}"
                        class="w-[300px] p-2 border bg-gray-100">
             </div>
-            @error('email')
-                <p class="text-red-500 text-sm mt-1 ml-[224px]">{{ $message }}</p>
-            @enderror
+        </div>
+        @error('email')
+            <p class="text-red-500 text-sm mt-1 ml-[224px]">{{ $message }}</p>
+        @enderror
         </div>
 
         <!-- パスワード -->
-        <div class="flex items-center mb-20">
+        <div class="mb-20">
+        <div class="flex items-center">
             <div class="w-56 mr-4">
-                <label class="block text-left whitespace-nowrap font-semibold">password</label>
+                <label class="block text-left whitespace-nowrap font-semibold">パスワード</label>
             </div>
             <div class="flex justify-end w-full">
                 <input type="password" name="password" placeholder="変更しない場合は空白でOK"
                        class="w-[300px] p-2 border bg-gray-100">
             </div>
-            @error('password')
-                <p class="text-red-500 text-sm mt-1 ml-[224px]">{{ $message }}</p>
-            @enderror
+        </div>
+        @error('password')
+            <p class="text-red-500 text-sm mt-1 ml-[224px]">{{ $message }}</p>
+        @enderror
         </div>
 
         <!-- パスワード確認 -->
-        <div class="flex items-center mb-20">
+        <div class="mb-20">
+        <div class="flex items-center">
             <div class="w-56 mr-4">
-                <label class="block text-left whitespace-nowrap font-semibold">password confirm</label>
+                <label class="block text-left whitespace-nowrap font-semibold">パスワード確認</label>
             </div>
             <div class="flex justify-end w-full">
                 <input type="password" name="password_confirmation" placeholder="確認用"
                        class="w-[300px] p-2 border bg-gray-100">
             </div>
-            @error('password_confirmation')
-                <p class="text-red-500 text-sm mt-1 ml-[224px]">{{ $message }}</p>
-            @enderror
+        </div>
+        @error('password_confirmation')
+            <p class="text-red-500 text-sm mt-1 ml-[224px]">{{ $message }}</p>
+        @enderror
         </div>
 
+
         <!-- 自己紹介 -->
-        <div class="flex items-center mb-20">
+        <div class="mb-20">
+        <div class="flex items-center">
             <div class="w-56 mr-4">
-                <label class="block text-left whitespace-nowrap font-semibold">bio</label>
+                <label class="block text-left whitespace-nowrap font-semibold">自己紹介文</label>
             </div>
             <div class="flex justify-end w-full">
                 <textarea name="bio" rows="1" class="w-[300px] p-2 border resize-none bg-gray-100">{{ old('bio', Auth::user()->bio) }}</textarea>
             </div>
-            @error('bio')
-                <p class="text-red-500 text-sm mt-1 ml-[224px]">{{ $message }}</p>
-            @enderror
+        </div>
+        @error('bio')
+            <p class="text-red-500 text-sm mt-1 ml-[224px]">{{ $message }}</p>
+        @enderror
         </div>
 
+
         <!-- アイコン画像 -->
-        <div class="flex mb-20">
+        <div class="mb-20">
+        <div class="flex">
             <div class="w-56 mr-4">
-                <label class="block text-left whitespace-nowrap font-semibold">icon image</label>
+                <label class="block text-left whitespace-nowrap font-semibold">アイコン画像</label>
             </div>
             <div class="flex justify-end w-full">
                 <div class="w-[300px] h-[100px] bg-gray-100 flex items-center justify-center border border-gray-500 border-solid">
@@ -98,10 +111,12 @@
                     <input type="file" id="icon_image" name="icon_image" accept="image/*" class="hidden">
                 </div>
             </div>
-            @error('icon_image')
-                <p class="text-red-500 text-sm mt-1 ml-[224px]">{{ $message }}</p>
-            @enderror
         </div>
+        @error('icon_image')
+            <p class="text-red-500 text-sm mt-1 ml-[224px]">{{ $message }}</p>
+        @enderror
+        </div>
+
 
         <!-- 更新ボタン -->
         <div class="pt-10 text-center mr-20">

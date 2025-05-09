@@ -32,9 +32,26 @@ class ProfileController extends Controller
                 'max:40',
                 Rule::unique('users')->ignore($user->id),
             ],
-            'password' => 'nullable|confirmed|alpha_num|min:8|max:20',
+            'password' => [
+                'required_with:password_confirmation',
+                'nullable',
+                'alpha_num',
+                'min:8',
+                'max:20',
+                'confirmed',
+                function ($attribute, $value, $fail) use ($request) {
+                    $confirmation = $request->input('password_confirmation');
+
+                    // 「確認欄だけに入力があって、パスワード欄が空」のときだけエラー
+                    if (is_null($value) || trim($value) === '') {
+                        if (!is_null($confirmation) && trim($confirmation) !== '') {
+                            $fail('パスワードが空のまま確認欄に入力されています。');
+                        }
+                    }
+                }
+            ],
             'bio' => 'nullable|string|max:150',
-            'icon_image' => 'nullable|image|mimes:jpg,jpeg,png,bmp,gif,svg',
+            'icon_image' => 'nullable|image|mimes:jpg,png,bmp,gif,svg',
         ]);
 
         // データ更新

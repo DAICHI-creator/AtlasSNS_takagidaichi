@@ -43,22 +43,22 @@
             @csrf
 
             <div class="mb-4">
-                <label class="text-white block mb-2">user name</label>
+                <label class="text-white block mb-2">ユーザー名</label>
                 <input type="text" name="username" required class="w-full p-2 rounded border border-gray-300 focus:outline-none focus:border-gray-400">
             </div>
 
             <div class="mb-4">
-                <label class="text-white block mb-2">mail address</label>
+                <label class="text-white block mb-2">メールアドレス</label>
                 <input type="email" name="email" required class="w-full p-2 rounded border border-gray-300 focus:outline-none focus:border-gray-400">
             </div>
 
             <div class="mb-4">
-                <label class="text-white block mb-2">password</label>
+                <label class="text-white block mb-2">パスワード</label>
                 <input type="password" name="password" required class="w-full p-2 rounded border border-gray-300 focus:outline-none focus:border-gray-400">
             </div>
 
             <div class="mb-6">
-                <label class="text-white block mb-2">password confirm</label>
+                <label class="text-white block mb-2">パスワード確認</label>
                 <input type="password" name="password_confirmation" required class="w-full p-2 rounded border border-gray-300 focus:outline-none focus:border-gray-400">
             </div>
 
