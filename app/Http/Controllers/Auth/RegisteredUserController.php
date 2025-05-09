@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\File;
 
 class RegisteredUserController extends Controller
 {
@@ -22,6 +23,14 @@ class RegisteredUserController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
+            // 【追加】storageにデフォルト画像がなければコピー
+    $storagePath = storage_path('app/public/images/icon1.png');
+    $publicPath = public_path('images/icon1.png');
+
+    if (!File::exists($storagePath)) {
+        File::copy($publicPath, $storagePath);
+    }
+
         $validated = $request->validate([
             'username'               => ['required', 'string', 'min:2', 'max:12'],
             'email'                  => ['required', 'string', 'email', 'min:5', 'max:40', 'unique:users,email'],
