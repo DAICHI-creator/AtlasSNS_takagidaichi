@@ -46,14 +46,14 @@ header {
 
 .modal__content {
     background: #fff;
-    right: 0;
     padding: 40px;
-    position: absolute;
+    position: fixed;
     top: 50%;
+    left: 50%;
     width: 60%;
     height: 40%;
     border-radius: 5px;
-    transform: translateY(-50%);
+    transform: translate(-50%, -50%);
 }
 
 .modal_post {
