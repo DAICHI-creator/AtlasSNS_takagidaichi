@@ -33,6 +33,7 @@ class ProfileController extends Controller
                 Rule::unique('users')->ignore($user->id),
             ],
             'password' => [
+                'required_with:password_confirmation',
                 'nullable',
                 'alpha_num',
                 'min:8',
