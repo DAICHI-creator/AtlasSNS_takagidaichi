@@ -48,6 +48,7 @@ class RegisteredUserController extends Controller
             'username' => $validated['username'],
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
+            'icon_image' => 'icon1.png',
         ]);
 
         session()->put('username', $user->username);

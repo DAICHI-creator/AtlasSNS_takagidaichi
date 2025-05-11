@@ -73,7 +73,7 @@ header {
 
 .edit-btn {
     position: absolute;
-    bottom: 24%;
+    bottom: 10%;
     left: 50%;
     transform: translateX(-50%);
     background: transparent;
