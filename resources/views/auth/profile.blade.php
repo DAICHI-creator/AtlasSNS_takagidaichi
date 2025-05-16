@@ -7,8 +7,29 @@
 <div class="flex justify-center bg-white p-10 min-h-[100px] mt-20 max-w-5xl mx-auto">
     <!-- アイコン -->
     <div class="w-12 h-12 mr-20 flex-shrink-0">
-        <img src="{{ asset('storage/images/' . Auth::user()->icon_image) }}" alt="アイコン"
-             class="rounded-full w-full h-full object-cover">
+        @php
+            // Storage の public ディスクにファイルがあるかチェック
+            use Illuminate\Support\Facades\Storage;
+
+            $filename = $user->icon_image;
+            $storagePath = 'images/' . $filename;
+        @endphp
+
+        @if (Storage::disk('public')->exists($storagePath))
+            {{-- storage/app/public/images/ にあるファイルを優先表示 --}}
+            <img
+                src="{{ asset('storage/' . $storagePath) }}"
+                alt="アイコン"
+                class="rounded-full w-full h-full object-cover"
+            >
+        @else
+            {{-- storage になければ public/images/ の初期画像を表示 --}}
+            <img
+                src="{{ asset('images/' . $filename) }}"
+                alt="アイコン"
+                class="rounded-full w-full h-full object-cover"
+            >
+        @endif
     </div>
 
     <!-- フォーム -->

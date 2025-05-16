@@ -10,7 +10,20 @@
         @csrf
         <div class="flex">
             <div class="h-12 relative top-[-4px] left-[16px]">
-                <img src="{{ asset('storage/images/' . Auth::user()->icon_image) }}" alt="アイコン" class="rounded-full w-full h-full object-cover">
+            @php
+                // Storage の public ディスクにファイルがあるかチェック
+                use Illuminate\Support\Facades\Storage;
+
+                $filename = $user->icon_image
+                $storagePath = 'images/' . $filename
+            @endphp
+
+            @if (Storage::disk('public')->exists($storagePath))
+                {{-- storage/app/public/images/ にあるファイルを優先表示 --}}
+                <img src="{{ asset('storage/' . $storagePath) }}" alt="アイコン" class="rounded-full w-full h-full object-cover">
+            @else
+                {{-- storage になければ public/images/ の初期画像を表示 --}}
+                <img src="{{ asset('images/' . $filename) }}" alt="アイコン" class="rounded-full w-full h-full object-cover">
             </div>
             <textarea name="post" rows="2" class="w-3/4 h-24 rounded p-2 resize-none border-none [text-indent:2rem] placeholder:text-gray-300" placeholder="投稿内容を入力してください。"></textarea>
             <button type="submit" class="ml-4 shrink-0 flex w-10 h-10 mt-20">
@@ -29,11 +42,29 @@
         <div class="post-item mb-6 p-4 rounded flex space-x-4 items-start relative ml-24">
             <!-- ユーザーアイコン -->
             <div class="w-12 h-12">
+            @php
+                // Storage の public ディスクにファイルがあるかチェック
+                use Illuminate\Support\Facades\Storage;
+
+                $filename = $user->icon_image;
+                $storagePath = 'images/' . $filename;
+            @endphp
+
+            @if (Storage::disk('public')->exists($storagePath))
+                {{-- storage/app/public/images/ にあるファイルを優先表示 --}}
                 <img
-                    src="{{ asset('storage/images/' . $post->user->icon_image) }}"
-                    alt="ユーザーアイコン"
+                    src="{{ asset('storage/' . $storagePath) }}"
+                    alt="アイコン"
                     class="rounded-full w-full h-full object-cover"
                 >
+            @else
+                {{-- storage になければ public/images/ の初期画像を表示 --}}
+                <img
+                    src="{{ asset('images/' . $filename) }}"
+                    alt="アイコン"
+                    class="rounded-full w-full h-full object-cover"
+                >
+            @endif
             </div>
 
             <!-- 投稿内容 -->
