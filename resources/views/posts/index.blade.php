@@ -14,8 +14,8 @@
                 // Storage の public ディスクにファイルがあるかチェック
                 use Illuminate\Support\Facades\Storage;
 
-                $filename = $user->icon_image
-                $storagePath = 'images/' . $filename
+                $filename = $user->icon_image;
+                $storagePath  = 'images/' . $filename;
             @endphp
 
             @if (Storage::disk('public')->exists($storagePath))
@@ -46,7 +46,7 @@
                 // Storage の public ディスクにファイルがあるかチェック
                 use Illuminate\Support\Facades\Storage;
 
-                $filename = $user->icon_image;
+                $filename = $post->user->icon_image;
                 $storagePath = 'images/' . $filename;
             @endphp
 
