@@ -10,8 +10,8 @@ class PostsController extends Controller
 {
     //
     public function index(){
-        $$user = Auth::user();
-        $$followedIds = $user->follows()->pluck('followed_id');
+        $user = Auth::user();
+        $followedIds = $user->follows()->pluck('followed_id');
         $posts = Post::whereIn('user_id', $followedIds)
                      ->orWhere('user_id', $user->id)
                      ->orderByDesc('created_at')
