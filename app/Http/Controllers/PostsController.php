@@ -10,12 +10,13 @@ class PostsController extends Controller
 {
     //
     public function index(){
-        $followedUserIds = Auth::user()->follows()->pluck('followed_id');
-        $posts = Post::whereIn('user_id', $followedUserIds)
-            ->orWhere('user_id', Auth::id())
-            ->latest()
-            ->get();
-        return view('posts.index', compact('posts'));
+        $$user = Auth::user();
+        $$followedIds = $user->follows()->pluck('followed_id');
+        $posts = Post::whereIn('user_id', $followedIds)
+                     ->orWhere('user_id', $user->id)
+                     ->orderByDesc('created_at')
+                     ->get();
+        return view('posts.index', compact('user', 'posts'));
     }
     public function store(Request $request)
 {
