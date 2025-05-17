@@ -12,7 +12,7 @@
             $storagePath = 'images/' . $filename;
         @endphp
 
-        @if (\Illuminate\Support\Facades\Storage::disk('public')->exists($storagePath))
+        @if (\Storage::disk('public')->exists($storagePath))
             {{-- storage/app/public/images/ にあるファイルを優先表示 --}}
             <img
                 src="{{ asset('storage/' . $storagePath) }}"

@@ -15,7 +15,8 @@ class ProfileController extends Controller
 {
     public function profile()
     {
-        return view('auth.profile'); // viewのパスは合わせてね
+        $user = Auth::user();
+        return view('auth.profile', compact('user'));
     }
 
     public function update(Request $request)
