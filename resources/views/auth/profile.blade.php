@@ -8,14 +8,11 @@
     <!-- アイコン -->
     <div class="w-12 h-12 mr-20 flex-shrink-0">
         @php
-            // Storage の public ディスクにファイルがあるかチェック
-            use Illuminate\Support\Facades\Storage;
-
             $filename = $user->icon_image;
             $storagePath = 'images/' . $filename;
         @endphp
 
-        @if (Storage::disk('public')->exists($storagePath))
+        @if (\Illuminate\Support\Facades\Storage::disk('public')->exists($storagePath))
             {{-- storage/app/public/images/ にあるファイルを優先表示 --}}
             <img
                 src="{{ asset('storage/' . $storagePath) }}"

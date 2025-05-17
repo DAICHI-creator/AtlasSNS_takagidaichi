@@ -11,19 +11,17 @@
         <div class="flex">
             <div class="h-12 relative top-[-4px] left-[16px]">
             @php
-                // Storage の public ディスクにファイルがあるかチェック
-                use Illuminate\Support\Facades\Storage;
-
                 $filename = $user->icon_image;
                 $storagePath  = 'images/' . $filename;
             @endphp
 
-            @if (Storage::disk('public')->exists($storagePath))
+            @if (\Illuminate\Support\Facades\Storage::disk('public')->exists($storagePath))
                 {{-- storage/app/public/images/ にあるファイルを優先表示 --}}
                 <img src="{{ asset('storage/' . $storagePath) }}" alt="アイコン" class="rounded-full w-full h-full object-cover">
             @else
                 {{-- storage になければ public/images/ の初期画像を表示 --}}
                 <img src="{{ asset('images/' . $filename) }}" alt="アイコン" class="rounded-full w-full h-full object-cover">
+            @endif
             </div>
             <textarea name="post" rows="2" class="w-3/4 h-24 rounded p-2 resize-none border-none [text-indent:2rem] placeholder:text-gray-300" placeholder="投稿内容を入力してください。"></textarea>
             <button type="submit" class="ml-4 shrink-0 flex w-10 h-10 mt-20">
@@ -43,14 +41,11 @@
             <!-- ユーザーアイコン -->
             <div class="w-12 h-12">
             @php
-                // Storage の public ディスクにファイルがあるかチェック
-                use Illuminate\Support\Facades\Storage;
-
                 $filename = $post->user->icon_image;
                 $storagePath = 'images/' . $filename;
             @endphp
 
-            @if (Storage::disk('public')->exists($storagePath))
+            @if (\Illuminate\Support\Facades\Storage::disk('public')->exists($storagePath))
                 {{-- storage/app/public/images/ にあるファイルを優先表示 --}}
                 <img
                     src="{{ asset('storage/' . $storagePath) }}"
