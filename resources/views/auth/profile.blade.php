@@ -72,7 +72,7 @@
                 <label class="block text-left whitespace-nowrap font-semibold">パスワード</label>
             </div>
             <div class="flex justify-end w-full">
-                <input type="password" name="password"  autocomplete="new-password" placeholder="変更しない場合は空白でOK"
+                <input type="password" name="password"  autocomplete="new-password" placeholder="新しいパスワードを入力してください"
                        class="w-[300px] p-2 border bg-gray-100">
             </div>
         </div>

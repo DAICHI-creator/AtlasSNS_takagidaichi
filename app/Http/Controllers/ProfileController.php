@@ -50,9 +50,7 @@ class ProfileController extends Controller
         $user->bio = $validated['bio'];
 
         // パスワード変更がある場合のみ
-        if (!empty($validated['password'])) {
-            $user->password = Hash::make($validated['password']);
-        }
+        $user->password = Hash::make($validated['password']);
 
         // アイコン画像アップロードがある場合のみ
         if ($request->hasFile('icon_image')) {
