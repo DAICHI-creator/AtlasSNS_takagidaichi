@@ -8,7 +8,18 @@
 <div class="bg-white rounded min-h-[100px] py-6 px-12">
     <div class="flex ml-10 mt-7">
         <div class="flex">
-            <img src="{{ asset('storage/images/' . $user->icon_image) }}" alt="ユーザーアイコン" class="w-12 h-12 rounded-full object-cover">
+                @php
+                    $filename = $user->icon_image;
+                    $storagePath  = 'images/' . $filename;
+                @endphp
+
+                @if (\Storage::disk('public')->exists($storagePath))
+                    {{-- storage/app/public/images/ にあるファイルを優先表示 --}}
+                    <img src="{{ asset('storage/' . $storagePath) }}" alt="アイコン" class="rounded-full w-12 h-12 object-cover">
+                @else
+                    {{-- storage になければ public/images/ の初期画像を表示 --}}
+                    <img src="{{ asset('images/' . $filename) }}" alt="アイコン" class="rounded-full w-12 h-12 object-cover">
+                @endif
             <div class="ml-10">
                 <p class="text-2xl mb-2">name</p>
                 <br>
@@ -52,7 +63,26 @@
         <div class="post-item mb-4 p-4 rounded flex space-x-4 items-start relative ml-24">
             <!-- アイコン -->
             <div class="w-12 h-12">
-                <img src="{{ asset('storage/images/' . $post->user->icon_image) }}" alt="ユーザーアイコン" class="rounded-full w-full h-full object-cover">
+                @php
+                    $filename = $post->user->icon_image;
+                    $storagePath = 'images/' . $filename;
+                @endphp
+
+                @if (\Storage::disk('public')->exists($storagePath))
+                    {{-- storage/app/public/images/ にあるファイルを優先表示 --}}
+                    <img
+                        src="{{ asset('storage/' . $storagePath) }}"
+                        alt="アイコン"
+                        class="rounded-full w-full h-full object-cover"
+                    >
+                @else
+                    {{-- storage になければ public/images/ の初期画像を表示 --}}
+                    <img
+                        src="{{ asset('images/' . $filename) }}"
+                        alt="アイコン"
+                        class="rounded-full w-full h-full object-cover"
+                    >
+                @endif
             </div>
 
             <!-- 投稿内容 -->

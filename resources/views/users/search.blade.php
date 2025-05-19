@@ -29,9 +29,20 @@
             <!-- アイコンとユーザー名 -->
             <div class="flex items-center">
                 <a href="{{ route('users.show', $user->id) }}">
-                    <img src="{{ asset('storage/images/' . $user->icon_image) }}" alt="アイコン" class="w-12 h-12 rounded-full object-cover mr-4">
+                @php
+                    $filename = $user->icon_image;
+                    $storagePath  = 'images/' . $filename;
+                @endphp
+
+                @if (\Storage::disk('public')->exists($storagePath))
+                    {{-- storage/app/public/images/ にあるファイルを優先表示 --}}
+                    <img src="{{ asset('storage/' . $storagePath) }}" alt="アイコン" class="rounded-full w-12 h-12 object-cover">
+                @else
+                    {{-- storage になければ public/images/ の初期画像を表示 --}}
+                    <img src="{{ asset('images/' . $filename) }}" alt="アイコン" class="rounded-full w-12 h-12 object-cover">
+                @endif
                 </a>
-                <p>{{ $user->username }}</p>
+                <p class="ml-4">{{ $user->username }}</p>
             </div>
 
             <!-- フォロー／フォロー解除ボタン -->

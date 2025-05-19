@@ -14,7 +14,18 @@
         @foreach ($followedUsers as $user)
             <!-- ユーザーアイコン -->
             <a href="{{ route('users.show', $user->id) }}" class="block mr-3 w-12 h-12">
-                <img src="{{ asset('storage/images/' . $user->icon_image) }}" alt="ユーザーアイコン" class="w-12 h-12 rounded-full object-cover hover:opacity-80">
+                @php
+                    $filename = $user->icon_image;
+                    $storagePath  = 'images/' . $filename;
+                @endphp
+
+                @if (\Storage::disk('public')->exists($storagePath))
+                    {{-- storage/app/public/images/ にあるファイルを優先表示 --}}
+                    <img src="{{ asset('storage/' . $storagePath) }}" alt="アイコン" class="rounded-full w-full h-full object-cover">
+                @else
+                    {{-- storage になければ public/images/ の初期画像を表示 --}}
+                    <img src="{{ asset('images/' . $filename) }}" alt="アイコン" class="rounded-full w-full h-full object-cover">
+                @endif
             </a>
         @endforeach
         @endif
@@ -32,11 +43,26 @@
                 <!-- ユーザーアイコン -->
                 <div class="w-12 h-12">
                     <a href="{{ route('users.show', $post->user->id) }}">
-                        <img
-                            src="{{ asset('storage/images/' . $post->user->icon_image) }}"
-                            alt="ユーザーアイコン"
-                            class="rounded-full w-full h-full object-cover">
-                    </a>
+                        @php
+                            $filename = $post->user->icon_image;
+                            $storagePath = 'images/' . $filename;
+                        @endphp
+
+                        @if (\Storage::disk('public')->exists($storagePath))
+                            {{-- storage/app/public/images/ にあるファイルを優先表示 --}}
+                            <img
+                                src="{{ asset('storage/' . $storagePath) }}"
+                                alt="アイコン"
+                                class="rounded-full w-full h-full object-cover"
+                            >
+                        @else
+                            {{-- storage になければ public/images/ の初期画像を表示 --}}
+                            <img
+                                src="{{ asset('images/' . $filename) }}"
+                                alt="アイコン"
+                                class="rounded-full w-full h-full object-cover"
+                            >
+                        @endif
                 </div>
 
                 <!-- 投稿内容 -->
