@@ -63,6 +63,7 @@
                                 class="rounded-full w-full h-full object-cover"
                             >
                         @endif
+                    </a>
                 </div>
 
                 <!-- 投稿内容 -->
